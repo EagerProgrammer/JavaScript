@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="header">제목</h1>
+    <p id="content">안녕</p>
+    <input id="alis" type="text" value="Op챔"/>
+    <!--버튼은 form안에 있으면 submit기능함-->
+    <button onclick="alert('inline처리')"">버튼1</button>
+    <input type="button" id="btn2" value="버튼2"/>
+    <script>
+        let h1 = document.getElementById("header")
+
+
+        h1.style.color = "Red";
+        h1.style.border = "2px Solid Black";
+        
+        document.getElementById("content").innerHTML += "배고파";
+        //alert(document.getElementById("alis").value);
+
+        document.getElementById("btn2").addEventListener("click", () => {
+            alert("쉬는 시간")
+        })
+    
+    </script>
+    <!--action은 처리할 서버의 URL
+    method는 요청 방식 - get, post-->
+    <form action="logingprocessing" method="post" id="loging">
+        <p id="msg"></p>
+        <p>
+            아이디<input type="text" name="id" id="id" />
+        </p>
+        <p>
+            비밀번호<input type="password" name="pw" id="pw"/>
+        </p>
+        <p>
+            비밀번호 확인란<input type="password" name="pwr" id="pwr"/>
+        </p>
+        <input type="submit" value="로그인"/>
+    </form>
+
+    <h1 id="outer">
+        <span id="inner">인라인태그</span>
+    </h1>
+    <script>
+        document.getElementById("outer").addEventListener("click", (e)=>{
+            alert("outer클릭")
+        })
+        document.getElementById("inner").addEventListener("click", (e) => {
+            alert("inner클릭")
+            
+            e.stopPropagation();
+        })
+        document.getElementById("loging").addEventListener("submit",
+        (e) => {
+            var reg = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$";
+            //아이디 입력란 찾아오기
+           if(document.getElementById("id").value.trim().length===0){
+                document.getElementById("msg").innerHTML = "아이디는 필수 입니다."
+
+                document.getElementById("msg").style.color = "Red";
+            
+                e.preventDefault();       
+                return;    }
+            if(document.getElementById("pw").value.trim().length <= 6){
+                document.getElementById("msg").innerHTML = "비밀번호는 최소 6자리 이상이어야합니다."
+
+                document.getElementById("msg").style.color = "Red";
+                e.preventDefault();
+                return;
+            }
+            if(document.getElementById("pwr").value.trim() !== document.getElementById("pw").value.trim()){
+                alert("비밀번호를 다시 확인해 주시기 바랍니다.");
+                e.preventDefault();
+                return;
+            }
+            if((reg.test(document.getElementById("pw").value.trim()))===false){
+                document.getElementById("msg").innerHTML = "비밀번호 규칙을 지켜주세요"
+                e.preventDefault();
+                return;
+            }
+            //기본 이벤트를 제거해서 서버에 전송하지 않도록 하기
+                e.preventDefault();
+        });
+    
+        //비밀번호가 비어있으면 안되도록 작성
+        //비밀번호 확인란을 만들어서 비밀번호와 확인란이 맞지 않으면 전송이 안되도록 작성
+        //비밀번호의 패턴이 맞지 않으면 전송이 되지 않도록 작성
+        //비밀본호의 패턴을 보고 강한 비밀번호인지 아닌지 판별
+    </script>
+
+</body>
+</html>
